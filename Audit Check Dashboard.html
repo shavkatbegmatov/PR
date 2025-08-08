@@ -21,12 +21,10 @@
             content: "";
             position: absolute;
             left: 15px;
-            top: -10px;
-            bottom: 50%;
-            width: 25px;
-            border-left: 2px solid #94a3b8;
-            border-bottom: 2px solid #94a3b8;
-            border-bottom-left-radius: 5px;
+            top: 0;
+            bottom: 0;
+            width: 1px;
+            background: #94a3b8;
         }
         
         .tree-leaf {
@@ -39,9 +37,9 @@
             content: "";
             position: absolute;
             left: 15px;
-            top: 50%;
-            height: 2px;
-            width: 25px;
+            top: 0;
+            height: 100%;
+            width: 1px;
             background: #94a3b8;
         }
         
@@ -90,18 +88,13 @@
         
         @media (max-width: 768px) {
             .tree-branch, .tree-leaf {
-                padding-left: 30px;
+                padding-left: 25px;
                 margin-left: 5px;
             }
             
-            .tree-branch::before {
-                left: 10px;
-                width: 20px;
-            }
-            
+            .tree-branch::before,
             .tree-leaf::before {
                 left: 10px;
-                width: 20px;
             }
         }
     </style>
