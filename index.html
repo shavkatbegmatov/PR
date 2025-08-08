@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bank Internal Portal | Staff Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .sidebar {
+            transition: all 0.3s ease;
+        }
+        .sidebar-collapsed {
+            width: 80px;
+        }
+        .sidebar-collapsed .nav-text {
+            display: none;
+        }
+        .sidebar-collapsed .logo-text {
+            display: none;
+        }
+        .sidebar-collapsed .nav-item {
+            justify-content: center;
+        }
+        .content-area {
+            transition: all 0.3s ease;
+        }
+        .content-expanded {
+            margin-left: 80px;
+        }
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+        }
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        @media (max-width: 768px) {
+            .sidebar {
+                position: fixed;
+                z-index: 50;
+                transform: translateX(-100%);
+            }
+            .sidebar-open {
+                transform: translateX(0);
+            }
+            .content-area {
+                margin-left: 0 !important;
+            }
+            .mobile-menu-btn {
+                display: block !important;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Mobile Menu Button -->
+    <div class="mobile-menu-btn hidden fixed top-4 left-4 z-50">
+        <button id="mobileMenuToggle" class="p-2 rounded-md bg-blue-600 text-white">
+            <i class="fas fa-bars"></i>
+        </button>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="sidebar fixed h-screen bg-blue-800 text-white w-64 shadow-lg">
+        <!-- Logo -->
+        <div class="p-4 flex items-center border-b border-blue-700">
+            <div class="logo-icon text-2xl">
+                <i class="fas fa-university"></i>
+            </div>
+            <div class="logo-text ml-3 text-xl font-bold">
+                BANK PORTAL
+            </div>
+        </div>
+
+        <!-- User Profile -->
+        <div class="p-4 flex items-center border-b border-blue-700">
+            <div class="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center">
+                <i class="fas fa-user"></i>
+            </div>
+            <div class="ml-3">
+                <div class="text-sm font-medium">John Doe</div>
+                <div class="text-xs text-blue-200">Admin</div>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <nav class="mt-4">
+            <div class="nav-item px-4 py-3 flex items-center hover:bg-blue-700 cursor-pointer bg-blue-700">
+                <i class="fas fa-tachometer-alt"></i>
+                <span class="nav-text ml-3">Dashboard</span>
+            </div>
+            <div class="nav-item px-4 py-3 flex items-center hover:bg-blue-700 cursor-pointer">
+                <i class="fas fa-users"></i>
+                <span class="nav-text ml-3">Customers</span>
+            </div>
+            <div class="nav-item px-4 py-3 flex items-center hover:bg-blue-700 cursor-pointer">
+                <i class="fas fa-money-bill-wave"></i>
+                <span class="nav-text ml-3">Transactions</span>
+            </div>
+            <div class="nav-item px-4 py-3 flex items-center hover:bg-blue-700 cursor-pointer">
+                <i class="fas fa-credit-card"></i>
+                <span class="nav-text ml-3">Accounts</span>
+            </div>
+            <div class="nav-item px-4 py-3 flex items-center hover:bg-blue-700 cursor-pointer">
+                <i class="fas fa-file-invoice-dollar"></i>
+                <span class="nav-text ml-3">Loans</span>
+            </div>
+            <div class="nav-item px-4 py-3 flex items-center hover:bg-blue-700 cursor-pointer">
+                <i class="fas fa-chart-line"></i>
+                <span class="nav-text ml-3">Reports</span>
+            </div>
+            <div class="nav-item px-4 py-3 flex items-center hover:bg-blue-700 cursor-pointer">
+                <i class="fas fa-cog"></i>
+                <span class="nav-text ml-3">Settings</span>
+            </div>
+        </nav>
+
+        <!-- Collapse Button -->
+        <div class="absolute bottom-4 left-0 right-0 flex justify-center">
+            <button id="sidebarToggle" class="p-2 rounded-full bg-blue-900 text-white">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="content-area min-h-screen ml-64">
+        <!-- Top Navigation -->
+        <header class="bg-white shadow-sm p-4 flex justify-between items-center">
+            <h1 class="text-xl font-bold text-gray-800">Dashboard</h1>
+            <div class="flex items-center space-x-4">
+                <div class="relative">
+                    <button class="p-2 rounded-full hover:bg-gray-100">
+                        <i class="fas fa-bell text-gray-600"></i>
+                        <span class="notification-badge bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">3</span>
+                    </button>
+                </div>
+                <div class="relative">
+                    <button class="p-2 rounded-full hover:bg-gray-100">
+                        <i class="fas fa-envelope text-gray-600"></i>
+                        <span class="notification-badge bg-blue-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">5</span>
+                    </button>
+                </div>
+                <div class="border-l border-gray-200 h-8"></div>
+                <div class="flex items-center">
+                    <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center">
+                        <i class="fas fa-user text-blue-600"></i>
+                    </div>
+                    <span class="ml-2 text-sm font-medium">John Doe</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="p-6">
+            <!-- Stats Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+                <div class="card-hover bg-white rounded-lg shadow p-6 transition duration-300">
+                    <div class="flex items-center">
+                        <div class="p-3 rounded-full bg-green-100 text-green-600">
+                            <i class="fas fa-wallet text-xl"></i>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-sm text-gray-500">Total Deposits</p>
+                            <h3 class="text-2xl font-bold">$12,345,678</h3>
+                        </div>
+                    </div>
+                    <div class="mt-4 text-sm text-green-600 flex items-center">
+                        <i class="fas fa-arrow-up mr-1"></i>
+                        <span>12% from last month</span>
+                    </div>
+                </div>
+                <div class="card-hover bg-white rounded-lg shadow p-6 transition duration-300">
+                    <div class="flex items-center">
+                        <div class="p-3 rounded-full bg-blue-100 text-blue-600">
+                            <i class="fas fa-hand-holding-usd text-xl"></i>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-sm text-gray-500">Total Loans</p>
+                            <h3 class="text-2xl font-bold">$8,765,432</h3>
+                        </div>
+                    </div>
+                    <div class="mt-4 text-sm text-red-600 flex items-center">
+                        <i class="fas fa-arrow-down mr-1"></i>
+                        <span>5% from last month</span>
+                    </div>
+                </div>
+                <div class="card-hover bg-white rounded-lg shadow p-6 transition duration-300">
+                    <div class="flex items-center">
+                        <div class="p-3 rounded-full bg-purple-100 text-purple-600">
+                            <i class="fas fa-users text-xl"></i>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-sm text-gray-500">New Customers</p>
+                            <h3 class="text-2xl font-bold">1,234</h3>
+                        </div>
+                    </div>
+                    <div class="mt-4 text-sm text-green-600 flex items-center">
+                        <i class="fas fa-arrow-up mr-1"></i>
+                        <span>8% from last month</span>
+                    </div>
+                </div>
+                <div class="card-hover bg-white rounded-lg shadow p-6 transition duration-300">
+                    <div class="flex items-center">
+                        <div class="p-3 rounded-full bg-yellow-100 text-yellow-600">
+                            <i class="fas fa-exchange-alt text-xl"></i>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-sm text-gray-500">Transactions</p>
+                            <h3 class="text-2xl font-bold">24,567</h3>
+                        </div>
+                    </div>
+                    <div class="mt-4 text-sm text-green-600 flex items-center">
+                        <i class="fas fa-arrow-up mr-1"></i>
+                        <span>15% from last month</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Transactions and Quick Actions -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+                <!-- Recent Transactions -->
+                <div class="lg:col-span-2 bg-white rounded-lg shadow overflow-hidden">
+                    <div class="p-4 border-b border-gray-200">
+                        <h2 class="text-lg font-semibold text-gray-800">Recent Transactions</h2>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Account</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">#TXN-1001</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">AC-987654321</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">$1,250.00</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Deposit</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Completed</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">#TXN-1002</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">AC-123456789</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">$750.00</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Withdrawal</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Completed</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">#TXN-1003</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">AC-456789123</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">$5,000.00</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Transfer</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">Pending</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">#TXN-1004</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">AC-789123456</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">$2,340.00</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Loan Payment</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Completed</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">#TXN-1005</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">AC-321654987</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">$10,000.00</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Deposit</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">Failed</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="p-4 border-t border-gray-200 text-right">
+                        <button class="text-blue-600 hover:text-blue-800 text-sm font-medium">View All Transactions →</button>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="bg-white rounded-lg shadow overflow-hidden">
+                    <div class="p-4 border-b border-gray-200">
+                        <h2 class="text-lg font-semibold text-gray-800">Quick Actions</h2>
+                    </div>
+                    <div class="p-4 grid grid-cols-2 gap-4">
+                        <button class="p-4 rounded-lg border border-gray-200 hover:border-blue-500 hover:bg-blue-50 transition duration-300 flex flex-col items-center justify-center">
+                            <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 mb-2">
+                                <i class="fas fa-user-plus"></i>
+                            </div>
+                            <span class="text-sm font-medium text-gray-700">New Customer</span>
+                        </button>
+                        <button class="p-4 rounded-lg border border-gray-200 hover:border-green-500 hover:bg-green-50 transition duration-300 flex flex-col items-center justify-center">
+                            <div class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center text-green-600 mb-2">
+                                <i class="fas fa-credit-card"></i>
+                            </div>
+                            <span class="text-sm font-medium text-gray-700">New Account</span>
+                        </button>
+                        <button class="p-4 rounded-lg border border-gray-200 hover:border-purple-500 hover:bg-purple-50 transition duration-300 flex flex-col items-center justify-center">
+                            <div class="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center text-purple-600 mb-2">
+                                <i class="fas fa-money-bill-wave"></i>
+                            </div>
+                            <span class="text-sm font-medium text-gray-700">New Transaction</span>
+                        </button>
+                        <button class="p-4 rounded-lg border border-gray-200 hover:border-yellow-500 hover:bg-yellow-50 transition duration-300 flex flex-col items-center justify-center">
+                            <div class="w-10 h-10 rounded-full bg-yellow-100 flex items-center justify-center text-yellow-600 mb-2">
+                                <i class="fas fa-file-invoice-dollar"></i>
+                            </div>
+                            <span class="text-sm font-medium text-gray-700">New Loan</span>
+                        </button>
+                        <button class="p-4 rounded-lg border border-gray-200 hover:border-red-500 hover:bg-red-50 transition duration-300 flex flex-col items-center justify-center">
+                            <div class="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center text-red-600 mb-2">
+                                <i class="fas fa-exchange-alt"></i>
+                            </div>
+                            <span class="text-sm font-medium text-gray-700">Transfer</span>
+                        </button>
+                        <button class="p-4 rounded-lg border border-gray-200 hover:border-indigo-500 hover:bg-indigo-50 transition duration-300 flex flex-col items-center justify-center">
+                            <div class="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 mb-2">
+                                <i class="fas fa-print"></i>
+                            </div>
+                            <span class="text-sm font-medium text-gray-700">Print Statement</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Customers and Activity Log -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Recent Customers -->
+                <div class="lg:col-span-1 bg-white rounded-lg shadow overflow-hidden">
+                    <div class="p-4 border-b border-gray-200">
+                        <h2 class="text-lg font-semibold text-gray-800">Recent Customers</h2>
+                    </div>
+                    <div class="divide-y divide-gray-200">
+                        <div class="p-4 flex items-center">
+                            <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div class="ml-4">
+                                <h4 class="text-sm font-medium text-gray-900">Sarah Johnson</h4>
+                                <p class="text-xs text-gray-500">Joined 2 hours ago</p>
+                            </div>
+                            <div class="ml-auto">
+                                <span class="px-2 py-1 text-xs rounded-full bg-blue-100 text-blue-800">New</span>
+                            </div>
+                        </div>
+                        <div class="p-4 flex items-center">
+                            <div class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center text-green-600">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div class="ml-4">
+                                <h4 class="text-sm font-medium text-gray-900">Michael Brown</h4>
+                                <p class="text-xs text-gray-500">Joined yesterday</p>
+                            </div>
+                        </div>
+                        <div class="p-4 flex items-center">
+                            <div class="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center text-purple-600">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div class="ml-4">
+                                <h4 class="text-sm font-medium text-gray-900">Emily Davis</h4>
+                                <p class="text-xs text-gray-500">Joined 2 days ago</p>
+                            </div>
+                        </div>
+                        <div class="p-4 flex items-center">
+                            <div class="w-10 h-10 rounded-full bg-yellow-100 flex items-center justify-center text-yellow-600">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div class="ml-4">
+                                <h4 class="text-sm font-medium text-gray-900">Robert Wilson</h4>
+                                <p class="text-xs text-gray-500">Joined 3 days ago</p>
+                            </div>
+                        </div>
+                        <div class="p-4 flex items-center">
+                            <div class="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center text-red-600">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div class="ml-4">
+                                <h4 class="text-sm font-medium text-gray-900">Jennifer Lee</h4>
+                                <p class="text-xs text-gray-500">Joined 4 days ago</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-4 border-t border-gray-200 text-right">
+                        <button class="text-blue-600 hover:text-blue-800 text-sm font-medium">View All Customers →</button>
+                    </div>
+                </div>
+
+                <!-- Activity Log -->
+                <div class="lg:col-span-2 bg-white rounded-lg shadow overflow-hidden">
+                    <div class="p-4 border-b border-gray-200">
+                        <h2 class="text-lg font-semibold text-gray-800">Activity Log</h2>
+                    </div>
+                    <div class="divide-y divide-gray-200">
+                        <div class="p-4 flex">
+                            <div class="flex-shrink-0">
+                                <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">
+                                    <i class="fas fa-user-plus"></i>
+                                </div>
+                            </div>
+                            <div class="ml-4">
+                                <h4 class="text-sm font-medium text-gray-900">New customer registered</h4>
+                                <p class="text-sm text-gray-500">Sarah Johnson opened a new savings account</p>
+                                <p class="text-xs text-gray-400 mt-1">10 minutes ago</p>
+                            </div>
+                        </div>
+                        <div class="p-4 flex">
+                            <div class="flex-shrink-0">
+                                <div class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center text-green-600">
+                                    <i class="fas fa-money-bill-wave"></i>
+                                </div>
+                            </div>
+                            <div class="ml-4">
+                                <h4 class="text-sm font-medium text-gray-900">Large deposit processed</h4>
+                                <p class="text-sm text-gray-500">$10,000 deposit to account AC-987654321</p>
+                                <p class="text-xs text-gray-400 mt-1">1 hour ago</p>
+                            </div>
+                        </div>
+                        <div class="p-4 flex">
+                            <div class="flex-shrink-0">
+                                <div class="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center text-purple-600">
+                                    <i class="fas fa-file-invoice-dollar"></i>
+                                </div>
+                            </div>
+                            <div class="ml-4">
+                                <h4 class="text-sm font-medium text-gray-900">Loan application approved</h4>
+                                <p class="text-sm text-gray-500">$25,000 personal loan for Michael Brown</p>
+                                <p class="text-xs text-gray-400 mt-1">3 hours ago</p>
+                            </div>
+                        </div>
+                        <div class="p-4 flex">
+                            <div class="flex-shrink-0">
+                                <div class="w-10 h-10 rounded-full bg-yellow-100 flex items-center justify-center text-yellow-600">
+                                    <i class="fas fa-exchange-alt"></i>
+                                </div>
+                            </div>
+                            <div class="ml-4">
+                                <h4 class="text-sm font-medium text-gray-900">Funds transfer completed</h4>
+                                <p class="text-sm text-gray-500">$5,000 transferred from AC-123456789 to AC-987654321</p>
+                                <p class="text-xs text-gray-400 mt-1">5 hours ago</p>
+                            </div>
+                        </div>
+                        <div class="p-4 flex">
+                            <div class="flex-shrink-0">
+                                <div class="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center text-red-600">
+                                    <i class="fas fa-exclamation-triangle"></i>
+                                </div>
+                            </div>
+                            <div class="ml-4">
+                                <h4 class="text-sm font-medium text-gray-900">Failed transaction</h4>
+                                <p class="text-sm text-gray-500">Withdrawal attempt failed for AC-456789123 (Insufficient funds)</p>
+                                <p class="text-xs text-gray-400 mt-1">Yesterday</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-4 border-t border-gray-200 text-right">
+                        <button class="text-blue-600 hover:text-blue-800 text-sm font-medium">View Full Log →</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="bg-white border-t border-gray-200 p-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="text-sm text-gray-500">
+                    © 2023 Bank Internal Portal. All rights reserved.
+                </div>
+                <div class="flex space-x-4 mt-4 md:mt-0">
+                    <a href="#" class="text-sm text-gray-500 hover:text-gray-700">Privacy Policy</a>
+                    <a href="#" class="text-sm text-gray-500 hover:text-gray-700">Terms of Service</a>
+                    <a href="#" class="text-sm text-gray-500 hover:text-gray-700">Help Center</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Sidebar toggle functionality
+        const sidebarToggle = document.getElementById('sidebarToggle');
+        const sidebar = document.querySelector('.sidebar');
+        const contentArea = document.querySelector('.content-area');
+        const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+
+        sidebarToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('sidebar-collapsed');
+            contentArea.classList.toggle('content-expanded');
+            
+            // Change the icon based on state
+            const icon = sidebarToggle.querySelector('i');
+            if (sidebar.classList.contains('sidebar-collapsed')) {
+                icon.classList.remove('fa-chevron-left');
+                icon.classList.add('fa-chevron-right');
+            } else {
+                icon.classList.remove('fa-chevron-right');
+                icon.classList.add('fa-chevron-left');
+            }
+        });
+
+        // Mobile menu toggle
+        mobileMenuToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('sidebar-open');
+        });
+
+        // Close sidebar when clicking outside on mobile
+        document.addEventListener('click', (e) => {
+            if (window.innerWidth <= 768 && 
+                !sidebar.contains(e.target) && 
+                !mobileMenuToggle.contains(e.target) &&
+                sidebar.classList.contains('sidebar-open')) {
+                sidebar.classList.remove('sidebar-open');
+            }
+        });
+
+        // Responsive adjustments
+        function handleResize() {
+            if (window.innerWidth <= 768) {
+                document.querySelector('.mobile-menu-btn').classList.remove('hidden');
+                sidebar.classList.add('sidebar-collapsed');
+                contentArea.classList.add('content-expanded');
+            } else {
+                document.querySelector('.mobile-menu-btn').classList.add('hidden');
+                sidebar.classList.remove('sidebar-open');
+            }
+        }
+
+        // Initial check
+        handleResize();
+
+        // Add resize event listener
+        window.addEventListener('resize', handleResize);
+    </script>
+</body>
+</html>

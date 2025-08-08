@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bank Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-light">
+
+<div class="container py-4">
+    <h1 class="mb-4">🏦 Bank Dashboard</h1>
+
+    <!-- Metrics Cards -->
+    <div class="row g-3">
+        <div class="col-md-3">
+            <div class="card text-bg-primary p-3">
+                <h5>Umumiy Balans</h5>
+                <h3>$12.5M</h3>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-bg-success p-3">
+                <h5>Joriy Aktivlar</h5>
+                <h3>$4.3M</h3>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-bg-warning p-3">
+                <h5>Kredit Portfeli</h5>
+                <h3>$8.1M</h3>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-bg-danger p-3">
+                <h5>Likvidlik</h5>
+                <h3>72%</h3>
+            </div>
+        </div>
+    </div>
+
+    <!-- Charts -->
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <canvas id="balanceChart"></canvas>
+        </div>
+        <div class="col-md-6">
+            <canvas id="loanDepositChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Currency Composition -->
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <canvas id="currencyChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Transactions Table -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <h4>So‘nggi Tranzaksiyalar</h4>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Sana</th>
+                        <th>Mijoz</th>
+                        <th>Tur</th>
+                        <th>Summa</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>2025-08-08</td>
+                        <td>Aliyev Otabek</td>
+                        <td>Kirim</td>
+                        <td>+ $2,500</td>
+                    </tr>
+                    <tr>
+                        <td>2025-08-08</td>
+                        <td>Karimova Dilnoza</td>
+                        <td>Chiqim</td>
+                        <td>- $1,200</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+// Balans o‘zgarishi
+new Chart(document.getElementById('balanceChart'), {
+    type: 'line',
+    data: {
+        labels: ['Yan', 'Fev', 'Mar', 'Apr', 'May', 'Iyun', 'Iyul'],
+        datasets: [{
+            label: 'Balans ($)',
+            data: [11.5, 11.8, 12.0, 12.3, 12.7, 12.4, 12.5],
+            borderColor: 'blue',
+            fill: false
+        }]
+    }
+});
+
+// Kredit / Depozit
+new Chart(document.getElementById('loanDepositChart'), {
+    type: 'bar',
+    data: {
+        labels: ['Yan', 'Fev', 'Mar', 'Apr', 'May', 'Iyun', 'Iyul'],
+        datasets: [
+            { label: 'Kreditlar', data: [6, 6.3, 6.5, 6.7, 6.8, 7.0, 7.1], backgroundColor: 'orange' },
+            { label: 'Depozitlar', data: [8, 8.2, 8.1, 8.4, 8.5, 8.6, 8.8], backgroundColor: 'green' }
+        ]
+    }
+});
+
+// Valyuta tarkibi
+new Chart(document.getElementById('currencyChart'), {
+    type: 'pie',
+    data: {
+        labels: ['USD', 'UZS', 'EUR'],
+        datasets: [{
+            data: [55, 35, 10],
+            backgroundColor: ['blue', 'green', 'yellow']
+        }]
+    }
+});
+</script>
+
+</body>
+</html>
