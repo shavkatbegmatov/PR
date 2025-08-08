@@ -17,6 +17,12 @@
             margin-left: 0;
         }
         
+        .tree-branch {
+            position: relative;
+            padding-left: 24px;
+            margin-left: 0;
+        }
+        
         .tree-branch::before {
             content: "";
             position: absolute;
@@ -38,13 +44,13 @@
             position: absolute;
             left: 12px;
             top: 0;
-            height: 100%;
+            bottom: 0;
             width: 1px;
             background: #d1d5db;
         }
 
         .tree-leaf:last-child::before {
-            height: 50%;
+            bottom: 50%;
         }
 
         .tree-leaf::after {
@@ -61,6 +67,8 @@
         .tree-branch > .tree-branch::before,
         .tree-branch > .tree-leaf::before {
             left: 12px;
+            top: -16px;
+            bottom: 16px;
             background: #d1d5db;
         }
         
