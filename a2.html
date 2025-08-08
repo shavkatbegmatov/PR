@@ -13,36 +13,40 @@
         
         .tree-branch {
             position: relative;
-            padding-left: 32px;
-            margin-left: 8px;
+            padding-left: 28px;
+            margin-left: 4px;
         }
         
         .tree-branch::before {
             content: "";
             position: absolute;
-            left: 12px;
-            top: -8px;
+            left: 16px;
+            top: -12px;
             bottom: 16px;
-            width: 2px;
-            background: linear-gradient(to bottom, #cbd5e1, #94a3b8);
-            border-radius: 2px;
+            width: 1px;
+            background: linear-gradient(to bottom, #d1d5db, #9ca3af);
+            border-radius: 1px;
+        }
+        
+        .tree-branch > .tree-branch::before {
+            left: 16px;
+            background: linear-gradient(to bottom, #e5e7eb, #d1d5db);
         }
         
         .tree-leaf {
             position: relative;
-            padding-left: 32px;
-            margin-left: 8px;
+            padding-left: 28px;
+            margin-left: 4px;
         }
         
         .tree-leaf::before {
             content: "";
             position: absolute;
-            left: 12px;
+            left: 16px;
             top: 0;
             height: 100%;
-            width: 2px;
-            background: #e2e8f0;
-            border-radius: 2px;
+            width: 1px;
+            background: #e5e7eb;
         }
 
         .tree-leaf:last-child::before {
@@ -52,11 +56,11 @@
         .tree-leaf::after {
             content: "";
             position: absolute;
-            left: 12px;
+            left: 16px;
             top: 50%;
-            width: 12px;
-            height: 2px;
-            background: #e2e8f0;
+            width: 8px;
+            height: 1px;
+            background: #d1d5db;
             transform: translateY(-50%);
         }
         
@@ -105,23 +109,23 @@
         
         @media (max-width: 768px) {
             .tree-branch, .tree-leaf {
-                padding-left: 28px;
-                margin-left: 6px;
+                padding-left: 24px;
+                margin-left: 4px;
             }
             
             .tree-branch::before {
-                left: 10px;
-                top: -6px;
+                left: 14px;
+                top: -8px;
                 bottom: 12px;
             }
 
             .tree-leaf::before,
             .tree-leaf::after {
-                left: 10px;
+                left: 14px;
             }
 
             .tree-leaf::after {
-                width: 10px;
+                width: 6px;
             }
         }
     </style>
